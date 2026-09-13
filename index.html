@@ -988,7 +988,69 @@ let traders = JSON.parse(localStorage.getItem('endhubAchievementsV3') || 'null')
 let hubMessages = JSON.parse(localStorage.getItem('endhubMessagesV1') || '[]');
 let equityChart = null;
 
-function login(){
+/* ===== SYNC CON GITHUB (mismo repo que hostea la página) ===== */
+const GH_TOKEN  = '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';
+const GH_REPO   = 'lautirl/Edge-Hub';
+const GH_BRANCH = 'main';
+const GH_FILE   = 'data.json';
+const GH_API    = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+let ghFileSha = null; // necesario para poder actualizar el archivo ya existente
+
+async function loadTradersFromGitHub(){
+  try{
+    const res = await fetch(`${GH_API}?ref=${GH_BRANCH}&t=${Date.now()}`, {
+      headers: {
+        'Authorization': `token ${GH_TOKEN}`,
+        'Accept': 'application/vnd.github+json'
+      }
+    });
+    if(res.status === 404){
+      ghFileSha = null; // el archivo todavía no existe, se va a crear en el próximo guardado
+      return null;
+    }
+    if(!res.ok) throw new Error('GitHub GET ' + res.status);
+    const json = await res.json();
+    ghFileSha = json.sha;
+    const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+    const parsed = JSON.parse(decoded);
+    return Array.isArray(parsed.traders) ? parsed.traders : null;
+  }catch(err){
+    console.error('No se pudo leer data.json de GitHub:', err);
+    return null;
+  }
+}
+
+async function saveTradersToGitHub(){
+  try{
+    const payload = JSON.stringify({ traders: traders, updatedAt: new Date().toISOString() }, null, 2);
+    const content = btoa(unescape(encodeURIComponent(payload)));
+    const body = {
+      message: 'Actualiza datos de EdgeHub',
+      content: content,
+      branch: GH_BRANCH
+    };
+    if(ghFileSha) body.sha = ghFileSha;
+
+    const res = await fetch(GH_API, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GH_TOKEN}`,
+        'Accept': 'application/vnd.github+json'
+      },
+      body: JSON.stringify(body)
+    });
+    if(!res.ok) throw new Error('GitHub PUT ' + res.status);
+    const json = await res.json();
+    ghFileSha = json.content.sha;
+    return true;
+  }catch(err){
+    console.error('No se pudo guardar data.json en GitHub:', err);
+    toast('No se pudo sincronizar con GitHub, se guardó solo en este dispositivo');
+    return false;
+  }
+}
+
+async function login(){
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value.trim();
   
@@ -1008,13 +1070,21 @@ function login(){
   document.getElementById('loginError').textContent = '';
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('loader').style.display = 'flex';
-  
+
+  const start = Date.now();
+  const remoteTraders = await loadTradersFromGitHub();
+  if(remoteTraders){
+    traders = remoteTraders;
+    localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
+  }
+  const wait = Math.max(0, 1800 - (Date.now() - start));
+
   setTimeout(() => {
     document.getElementById('loader').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     applySession(u);
     initFireWave();
-  }, 1800);
+  }, wait);
 }
 
 document.addEventListener('keydown', e => {
@@ -1274,7 +1344,7 @@ function closeAwardModal(){
   currentAwardTraderIndex = null;
 }
 
-function saveRoleOnly(){
+async function saveRoleOnly(){
   if(!isAdmin) return;
   if(currentAwardTraderIndex !== null){
     const newRole = document.getElementById('customRoleInput').value.trim();
@@ -1283,10 +1353,11 @@ function saveRoleOnly(){
     renderAll();
     toast('Título actualizado');
     closeAwardModal();
+    await saveTradersToGitHub();
   }
 }
 
-function confirmAward(icon, glowClass){
+async function confirmAward(icon, glowClass){
   if(!isAdmin) return;
   if(currentAwardTraderIndex !== null){
     if(!traders[currentAwardTraderIndex].badges) traders[currentAwardTraderIndex].badges = [];
@@ -1300,6 +1371,7 @@ function confirmAward(icon, glowClass){
     renderAll();
     toast(`¡Icono ${icon} otorgado a ${traders[currentAwardTraderIndex].name}!`);
     closeAwardModal();
+    await saveTradersToGitHub();
   }
 }
 
@@ -1388,7 +1460,7 @@ function renderEditor(){
   `).join('');
 }
 
-function saveTrader(i){
+async function saveTrader(i){
   if(!isAdmin) return;
   const s = Math.max(0, parseInt(document.getElementById('strk-' + i).value || 0));
   const c = Math.min(100, Math.max(0, parseInt(document.getElementById('cons-' + i).value || 0)));
@@ -1399,6 +1471,7 @@ function saveTrader(i){
   localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
   renderAll();
   toast('Métricas de ' + traders[i].name + ' actualizadas');
+  await saveTradersToGitHub();
 }
 
 function toast(msg){
