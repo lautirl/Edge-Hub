@@ -1556,5 +1556,130 @@ function initFireWave(){
   draw();
 }
 </script>
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+  // Tu configuración oficial de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDaa0202QD6WmSEOs6qqhWE0AMIFNr1feg",
+    authDomain: "edhehub.firebaseapp.com",
+    projectId: "edhehub",
+    storageBucket: "edhehub.firebasestorage.app",
+    messagingSenderId: "587481714783",
+    appId: "1:587481714783:web:69153817ec93e198b58bea",
+    measurementId: "G-PZEHMEDH1E"
+  };
+
+  // Inicializar Firebase, Analytics, Firestore y Storage
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // 1. Función de envío (Conectada a "Enviar Hub")
+  window.sendToHub = async function() {
+    try {
+      const comment = document.getElementById("hubComment").value;
+      const fileInput = document.getElementById("hubImageInput");
+      let imageUrl = "";
+
+      if (!comment && (!fileInput || !fileInput.files[0])) {
+        alert("Escribe un comentario o adjunta una imagen antes de enviar.");
+        return;
+      }
+
+      // Subir imagen si se seleccionó una
+      if (fileInput && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const storageRef = ref(storage, `buzon/${Date.now()}_${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      // Obtener el nombre del usuario actual
+      const usuarioActual = window.currentUser || document.getElementById("profileName").innerText || "Usuario";
+      
+      // Guardar el mensaje en Firestore
+      await addDoc(collection(db, "mensajes_buzon"), {
+        usuario: usuarioActual,
+        comentario: comment,
+        imagenUrl: imageUrl,
+        timestamp: Date.now()
+      });
+
+      alert("¡Enviado a Lauti con éxito 🚀!");
+      
+      // Limpiar campos del formulario
+      document.getElementById("hubComment").value = "";
+      if(fileInput) fileInput.value = "";
+      const previewContainer = document.getElementById("previewContainer");
+      if(previewContainer) previewContainer.style.display = "none";
+      
+    } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
+      alert("Hubo un error al enviar el mensaje. Revisa la consola.");
+    }
+  };
+
+  // 2. Sincronización en tiempo real del Buzón y el contador de notificaciones
+  const q = query(collection(db, "mensajes_buzon"), orderBy("timestamp", "desc"));
+  
+  onSnapshot(q, (snapshot) => {
+    let inboxList = document.getElementById("inboxListDynamic");
+    if (!inboxList) {
+      const inboxContainer = document.querySelector(".modal-card"); 
+      if (inboxContainer) {
+        inboxList = document.createElement("div");
+        inboxList.id = "inboxListDynamic";
+        inboxList.className = "inbox-list";
+        inboxContainer.appendChild(inboxList);
+      }
+    }
+
+    if (inboxList) {
+      inboxList.innerHTML = "";
+    }
+
+    const badge = document.getElementById("mailBadge");
+    if (badge) {
+      badge.innerText = snapshot.size;
+      badge.style.display = snapshot.size > 0 ? "flex" : "none";
+    }
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const fecha = new Date(data.timestamp).toLocaleString();
+
+      if (inboxList) {
+        const item = document.createElement("div");
+        item.className = "inbox-item";
+        item.innerHTML = `
+          <div class="inbox-header">
+            <span class="inbox-user">${data.usuario || "Trader"}</span>
+            <span class="inbox-date">${fecha}</span>
+          </div>
+          ${data.comentario ? `<div class="inbox-comment">${data.comentario}</div>` : ""}
+          ${data.imagenUrl ? `<img src="${data.imagenUrl}" class="inbox-img" alt="Captura">` : ""}
+          <button class="btn-delete-msg" onclick="eliminarMensajeBuzon('${docSnap.id}')" style="margin-top:8px;">🗑️ Eliminar</button>
+        `;
+        inboxList.appendChild(item);
+      }
+    });
+  });
+
+  // 3. Función para borrar mensajes de Firestore
+  window.eliminarMensajeBuzon = async function(id) {
+    if (confirm("¿Estás seguro de eliminar este mensaje?")) {
+      try {
+        await deleteDoc(doc(db, "mensajes_buzon", id));
+      } catch (e) {
+        console.error("Error al eliminar el mensaje:", e);
+      }
+    }
+  };
+</script> 
 </body>
 </html>
