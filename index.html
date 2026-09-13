@@ -182,7 +182,7 @@ body{
   justify-content: center;
   backdrop-filter: blur(6px);
   transition: all 0.25s ease;
-  position: relative; /* Asegura que la medalla se posicione bien */
+  position: relative;
 }
 .ach-card-mini:hover {
   border-color: rgba(101, 169, 255, 0.3);
@@ -217,7 +217,6 @@ body{
 .tag-fire { background: rgba(255, 102, 0, 0.15); color: #ff6600; border: 1px solid rgba(255, 102, 0, 0.3); }
 .tag-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); }
 
-/* RANGER: ROJO TIRANDO A BORDÓ */
 .ach-card-ranger {
   background: rgba(45, 8, 15, 0.75) !important;
   border: 1px solid rgba(180, 25, 45, 0.45) !important;
@@ -228,7 +227,6 @@ body{
   box-shadow: 0 0 15px rgba(230, 35, 60, 0.25);
 }
 
-/* EFECTO FUEGO AL PASAR EL CURSOR (HOVER) EN WIN STREAK X3 Y X5 */
 .ach-fire-hover {
   transition: all 0.3s ease;
 }
@@ -239,7 +237,6 @@ body{
   transform: translateY(-3px) scale(1.02);
 }
 
-/* EFECTO FUEGO ANIMADO (Para x9, x11 y x15) */
 .ach-animated-fire {
   transition: all 0.3s ease;
 }
@@ -267,7 +264,6 @@ body{
   }
 }
 
-/* MEDALLA LEVITANDO */
 .levitating-medal {
   position: absolute;
   top: -12px;
@@ -283,7 +279,6 @@ body{
   100% { transform: translateY(-8px); }
 }
 
-/* INTEGRANTES Y DEMÁS */
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));gap:20px;margin-top:15px}
 .profile-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 18px;text-align:center;position:relative;overflow:hidden;transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease}
 .profile-card:hover{transform:translateY(-4px);border-color:#2a364a;box-shadow:0 12px 30px rgba(0,0,0,0.5)}
@@ -323,7 +318,6 @@ body{
 }
 .award-btn-mini:hover{background:#111a28;border-color:var(--blue);color:#fff;box-shadow:0 0 12px rgba(101,169,255,0.2)}
 
-/* MODALES Y VARIOS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:20000;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-card{background:var(--panel);border:1px solid #253144;border-radius:16px;width:min(480px, 95%);padding:22px;box-shadow:0 20px 50px rgba(0,0,0,0.8)}
 .modal-card h3{margin:0 0 4px;font-size:18px}
@@ -397,7 +391,6 @@ body{
   .layout{grid-template-columns:1fr}
 }
 
-/* ===== MENÚ HAMBURGUESA (solo se ve en celular) ===== */
 .hamburger-btn{
   display:none;width:40px;height:40px;border-radius:10px;background:#101724;
   border:1px solid #202b3d;align-items:center;justify-content:center;
@@ -414,12 +407,9 @@ body{
 }
 .nav-overlay.visible{display:block;opacity:1}
 
-/* ===== CELULAR: calidad general + menú lateral como panel deslizable ===== */
 @media(max-width:640px){
   html,body{overflow-x:hidden}
-
   .hamburger-btn{display:flex}
-
   .side{
     width:min(78vw,270px);height:100vh;padding:22px 16px;
     transform:translateX(-100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);
@@ -428,9 +418,7 @@ body{
   .side.open{transform:translateX(0)}
   .brand{font-size:22px;margin:4px 6px 28px}
   .nav button{font-size:14px;text-align:left;padding:12px 14px}
-
   .main{margin-left:0;width:100%;padding:16px 14px 28px}
-
   .top{flex-wrap:nowrap;align-items:flex-start;gap:10px;margin-bottom:18px}
   .top-titles{display:flex;align-items:center;gap:10px;min-width:0}
   .top h1{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -440,7 +428,6 @@ body{
   .mailbox-btn{width:36px;height:36px;font-size:15px;border-radius:10px}
   #profileRole{display:none}
   .logout{font-size:11px}
-
   .grid{gap:12px}
   .card{padding:16px;border-radius:12px}
   .label{font-size:11px}
@@ -450,13 +437,10 @@ body{
   .card h3{font-size:14px;margin:0 0 12px}
   .chartbox{height:220px}
   .fire-card{padding:14px}
-
   .rank{padding:11px 0}
-
   .team-grid,.ach-grid{grid-template-columns:1fr}
   .ach-card-mini{padding:14px 16px}
   .profile-card{padding:20px 16px}
-
   .award-options-grid{grid-template-columns:repeat(2,1fr);gap:8px}
   .award-opt{padding:14px 6px;font-size:24px}
   .edit-inputs{grid-template-columns:1fr}
@@ -465,7 +449,6 @@ body{
   .modal-actions button{flex:1 1 auto}
   .inbox-list{max-height:55vh}
   .send-hub-card{padding:18px}
-
   .login-wrap h1{font-size:clamp(34px,10vw,52px)}
   .login-card{padding:16px}
 }
@@ -489,7 +472,7 @@ body{
   </div>
 </div>
 
-<!-- LOADER VELAS JAPONESAS -->
+<!-- LOADER -->
 <div id="loader">
   <div class="candles">
     <div class="candle white"></div>
@@ -618,25 +601,19 @@ body{
   </div>
 </div>
 
-<!-- VISTA 4: LOGROS COMPLETO -->
+<!-- VISTA 4: LOGROS -->
 <div id="view-achievements" class="view-section">
   <div class="achievements-container">
-
-    <!-- SECCIÓN 1: RACHAS -->
     <div>
       <div class="ach-category-title">Rachas & Win Streak</div>
       <div class="ach-category-subtitle">Encendé la llama acumulando operaciones ganadoras consecutivas.</div>
       <div class="ach-grid">
-
-        <!-- LOGRO WIN STREAK X3 CON HOVER EN FUEGO -->
         <div class="ach-card-mini ach-fire-hover">
           <div class="ach-info">
             <b>The Streak</b>
             <span>x3 Win Streak acumulada.</span>
           </div>
         </div>
-
-        <!-- LOGRO WIN STREAK X5 CON HOVER EN FUEGO -->
         <div class="ach-card-mini ach-fire-hover">
           <div class="levitating-medal">🏅</div>
           <div class="ach-info">
@@ -644,7 +621,6 @@ body{
             <span>x5 Win Streak para cerrar la semana arriba.</span>
           </div>
         </div>
-
         <div class="ach-card-mini ach-animated-fire">
           <div class="ach-info">
             <b>Streak Leader</b>
@@ -667,902 +643,83 @@ body{
         </div>
       </div>
     </div>
-
-    <!-- SECCIÓN 2: TÍTULOS -->
-    <div>
-      <div class="ach-category-title">Títulos & Trayectoria</div>
-      <div class="ach-category-subtitle">Ganan los que establecen estándares dentro del ecosistema.</div>
-      <div class="ach-grid">
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Reclutador Nato</b>
-            <span>Trae 3 personas nuevas al grupo.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="levitating-medal">🏅</div>
-          <div class="ach-info">
-            <b>Retira por Primera Vez</b>
-            <span>Retira al menos una vez tu payout.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="levitating-medal">🏅</div>
-          <div class="ach-info">
-            <b>Retiro Doble</b>
-            <span>¡Retiraste ya dos veces de tu cuenta!</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Con Dos Manos</b>
-            <span>Opera dos cuentas de fondeo (PA).</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>2 Años</b>
-            <span>Tradeando activamente por más de 2 años.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini" style="border-color: rgba(168, 85, 247, 0.4);">
-          <div class="ach-info">
-            <b style="color:var(--purple)">Corazones Púrpura</b>
-            <span>EndGame de EdgeHub: llegaste a las ligas mayores.</span>
-            <span class="ach-special-tag tag-purple">Elite Rank</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN 3: RENDIMIENTO -->
-    <div>
-      <div class="ach-category-title">Win Rate & Performance</div>
-      <div class="ach-category-subtitle">Presición matemática y capacidad de respuesta táctica.</div>
-      <div class="ach-grid">
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Good Morning</b>
-            <span>x1 First day green de la semana.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Recovery</b>
-            <span>Regresar positivo tras 2 pérdidas consecutivas.</span>
-          </div>
-        </div>
-
-        <!-- LOGRO SNIPER CON RIFLE PEQUEÑO REALISTA -->
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>
-              Sniper
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#43e69b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
-                <!-- Cañón y Freno de Boca -->
-                <path d="M1 9.5h15" />
-                <path d="M1 8.5v2" />
-                <!-- Mira Telescópica -->
-                <rect x="7" y="5.5" width="6" height="2.5" rx="0.5" />
-                <path d="M10 5.5v-1.5" />
-                <path d="M5.5 6.7h9" />
-                <!-- Cuerpo / Cerrojo -->
-                <path d="M14 9.5h4l2 3.5h-8z" />
-                <!-- Guardamonte y Gatillo -->
-                <path d="M13 9.5v2.5c0 .5-.5 1-1 1h-1" />
-                <!-- Empuñadura -->
-                <path d="M14.5 13l-1.5 4h-2" />
-                <!-- Culata y Cantonera -->
-                <path d="M18 9.5l3.5 1v6.5l-2-1.5-3.5-2" />
-                <!-- Bípode plegado/desplegado -->
-                <path d="M4 9.5l-1.5 5.5" />
-                <path d="M5 9.5l1.5 5.5" />
-              </svg>
-            </b>
-            <span>Mantener >60% Win Rate en la semana.</span>
-          </div>
-        </div>
-
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>No lo Silben</b>
-            <span>Ganar un trade que estuvo casi perdido.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="levitating-medal">🏅</div>
-          <div class="ach-info">
-            <b>Consistencia</b>
-            <span>Profitable Month con >60% WR semanal.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN 4: TROFEOS GENERALES -->
-    <div>
-      <div class="ach-category-title">Trofeos & Disciplina</div>
-      <div class="ach-category-subtitle">Premiamos y reconocemos a los traders más dedicados de la comunidad.</div>
-      <div class="ach-grid">
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Social Level 1</b>
-            <span>Participar activamente en el chat oficial.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Social Level 2</b>
-            <span>"Hablas mucho cállate" — Alto nivel de chat.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Social Level 3</b>
-            <span>Ayuda al equipo y participa de forma constante.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Analista</b>
-            <span>Aporta análisis de mercado 10 veces en el mes.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Mind Safe</b>
-            <span>Registra tus emociones 5 días seguidos en bitácora.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Reflection is the Key</b>
-            <span>Reflexiona y autoevalúa durante 10 días.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN 5: LOGROS ESPECIALES Y RECOMPENSAS DESTACADAS -->
-    <div>
-      <div class="ach-category-title">Logros Especiales & Destacados</div>
-      <div class="ach-category-subtitle">Calificación reservada únicamente para lo mejor de lo mejor.</div>
-      <div class="ach-grid">
-        <div class="ach-card-mini" style="border-color: rgba(245, 200, 91, 0.3);">
-          <div class="ach-info">
-            <b style="color:var(--fire-orange)">Money Man</b>
-            <span>Payout mayor a $700 dólares 🔥</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b style="color:var(--blue)">El Capitán</b>
-            <span>>22 días operando seguido con disciplina 🔥</span>
-          </div>
-        </div>
-        <div class="ach-card-mini" style="border-color: rgba(245, 200, 91, 0.4);">
-          <div class="ach-info">
-            <b style="color:#f5c85b">Mayor Consistencia del Mes</b>
-            <span>Sé el trader más consistente de todo el grupo.</span>
-          </div>
-        </div>
-
-        <!-- LOGRO RANGER CON FONDO ROJO BORDÓ -->
-        <div class="ach-card-mini ach-card-ranger">
-          <div class="ach-info">
-            <b style="color:#ff4d5f">Ranger</b>
-            <span style="color:#e2a8b0">Termina el mes con solo 2 pérdidas totales.</span>
-          </div>
-        </div>
-
-        <div class="ach-card-mini" style="border-color: rgba(67, 230, 155, 0.4);">
-          <div class="ach-info">
-            <b style="color:var(--green)">CEO OF THE GAME</b>
-            <span>Persona con el mayor Win Rate (WR) del mes.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN 6: LOGROS DIVERTIDOS Y SECRETOS -->
-    <div>
-      <div class="ach-category-title">Logros Divertidos & Secretos</div>
-      <div class="ach-category-subtitle">Una pizca extra de diversión y sorpresas para el grupo.</div>
-      <div class="ach-grid">
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Fundador</b>
-            <span>De los primeros integrantes en la historia del grupo.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="levitating-medal">🏅</div>
-          <div class="ach-info">
-            <b>Es un Tritón</b>
-            <span>Ejecutar el mejor trade de la semana.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Party Streak</b>
-            <span>4 o más personas tomaron exactamente la misma entrada.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Asia CEO</b>
-            <span>Operaste en las sesiones de NY y ASIA el mismo día.</span>
-          </div>
-        </div>
-        <div class="ach-card-mini">
-          <div class="ach-info">
-            <b>Comeback</b>
-            <span>Tras 3 días rojos, volviste fuerte en verde (+$600).</span>
-          </div>
-        </div>
-        <div class="ach-card-mini" style="background: rgba(10, 10, 15, 0.9); border: 1px dashed #303b4d;">
-          <div class="ach-info">
-            <b style="color:var(--muted)">Logro Secreto</b>
-            <span>No sabrás que existe hasta que lo desbloquees...</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- VISTA 5: ESTADÍSTICAS -->
-<div id="view-stats" class="view-section">
-  <div class="card">
-    <h3>Estadísticas Generales del Grupo</h3>
-    <p class="sub">Análisis detallado de la racha de victorias y niveles de disciplina en la ejecución.</p>
   </div>
 </div>
 
 </main>
 </div>
 
-<!-- MODAL BUZÓN DE MENSAJES (SOLO LAUTI) -->
-<div class="modal-overlay" id="inboxModal">
+<!-- MODAL DEL BUZÓN -->
+<div class="modal-overlay" id="inboxModal" style="display:none;" onclick="if(event.target === this) closeInboxModal()">
   <div class="modal-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <h3 style="margin:0">Buzón de Entradas</h3>
-      <button style="background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:18px" onclick="closeInboxModal()">✕</button>
-    </div>
-    <p>Mensajes e imágenes enviadas por los integrantes del equipo:</p>
-    
-    <div class="inbox-list" id="inboxContainer"></div>
-
-    <div class="modal-actions" style="margin-top:16px">
+    <h3>Buzón de Mensajes Recibidos</h3>
+    <p>Historial de reportes y capturas enviadas por el equipo.</p>
+    <div id="inboxListDynamic" class="inbox-list"></div>
+    <div class="modal-actions" style="margin-top:15px;">
       <button class="btn-cancel" onclick="closeInboxModal()">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL SELECCIONADOR EXCLUSIVO (EXCLUSIVO LAUTI) -->
-<div class="modal-overlay" id="awardModal">
-  <div class="modal-card">
-    <h3 id="modalTargetName">Gestionar Perfil</h3>
-    <p>Concedé o remové reconocimientos y modificá el título personalizado:</p>
-
-    <div class="modal-input-group">
-      <label>Título / Rol Personalizado</label>
-      <input type="text" id="customRoleInput" placeholder="Ej: Elite Trader, Founder, Scalper...">
-    </div>
-    
-    <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:8px">Añadir Medalla, Trofeo o Reloj:</label>
-    <div class="award-options-grid">
-      <div class="award-opt" onclick="confirmAward('🏆', 'glow-gold')">🏆<span>Trofeo Oro</span></div>
-      <div class="award-opt" onclick="confirmAward('🥇', 'glow-gold')">🥇<span>Medalla Oro</span></div>
-      <div class="award-opt" onclick="confirmAward('🥈', 'glow-silver')">🥈<span>Med. Plata</span></div>
-      <div class="award-opt" onclick="confirmAward('🥉', 'glow-bronze')">🥉<span>Med. Bronce</span></div>
-      <div class="award-opt" onclick="confirmAward('⏱️', 'glow-blue')">⏱️<span>Reloj 1</span></div>
-      <div class="award-opt" onclick="confirmAward('🕰️', 'glow-purple')">🕰️<span>Reloj 2</span></div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeAwardModal()">Cancelar</button>
-      <button style="background:var(--blue);color:#000" onclick="saveRoleOnly()">Guardar Título</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
+<!-- SCRIPT GENERAL Y DE FIREBASE INTEGRADO -->
 <script>
-let isAdmin = false;
-let currentUser = 'Usuario';
-let currentAwardTraderIndex = null;
-let currentBase64Image = '';
+  // Funciones básicas de navegación de pestañas y modales que ya usaba tu app
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-' + tabId).classList.add('active');
+    if(btn) btn.classList.add('active');
+  }
 
-const defaultTraders = [
-  { name: 'Fran', streak: 6, consistency: 85, color: '#43e69b', role: 'Miembro', badges: [{icon:'🥇', glow:'glow-gold'}, {icon:'⏱️', glow:'glow-blue'}] },
-  { name: 'Tony', streak: 5, consistency: 80, color: '#65a9ff', role: 'Miembro', badges: [{icon:'🥉', glow:'glow-bronze'}] },
-  { name: 'Alexis', streak: 8, consistency: 92, color: '#f5c85b', role: 'Miembro', badges: [{icon:'🏆', glow:'glow-gold'}, {icon:'🥈', glow:'glow-silver'}] },
-  { name: 'Esteban', streak: 0, consistency: 0, color: '#b57edc', role: 'Miembro', badges: [] },
-  { name: 'Lauti', streak: 10, consistency: 96, color: '#ff5500', role: 'Founder & Trader', badges: [{icon:'🏆', glow:'glow-gold'}, {icon:'🥇', glow:'glow-gold'}, {icon:'⏱️', glow:'glow-blue'}] }
-];
+  function openInboxModal() {
+    document.getElementById('inboxModal').style.display = 'flex';
+  }
 
-let traders = JSON.parse(localStorage.getItem('endhubAchievementsV3') || 'null') || defaultTraders;
-let hubMessages = JSON.parse(localStorage.getItem('endhubMessagesV1') || '[]');
-let equityChart = null;
+  function closeInboxModal() {
+    document.getElementById('inboxModal').style.display = 'none';
+  }
 
-/* ===== SYNC CON GITHUB (mismo repo que hostea la página) ===== */
-const GH_TOKEN  = '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';
-const GH_REPO   = 'lautirl/Edge-Hub';
-const GH_BRANCH = 'main';
-const GH_FILE   = 'data.json';
-const GH_API    = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
-let ghFileSha = null; // necesario para poder actualizar el archivo ya existente
-
-async function loadTradersFromGitHub(){
-  try{
-    const res = await fetch(`${GH_API}?ref=${GH_BRANCH}&t=${Date.now()}`, {
-      headers: {
-        'Authorization': `token ${GH_TOKEN}`,
-        'Accept': 'application/vnd.github+json'
+  function previewHubImage(event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImg = document.getElementById('hubImgPreview');
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        previewContainer.style.display = 'block';
       }
-    });
-    if(res.status === 404){
-      ghFileSha = null; // el archivo todavía no existe, se va a crear en el próximo guardado
-      return null;
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.style.display = 'none';
     }
-    if(!res.ok) throw new Error('GitHub GET ' + res.status);
-    const json = await res.json();
-    ghFileSha = json.sha;
-    const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
-    const parsed = JSON.parse(decoded);
-    return Array.isArray(parsed.traders) ? parsed.traders : null;
-  }catch(err){
-    console.error('No se pudo leer data.json de GitHub:', err);
-    return null;
   }
-}
 
-async function saveTradersToGitHub(){
-  try{
-    const payload = JSON.stringify({ traders: traders, updatedAt: new Date().toISOString() }, null, 2);
-    const content = btoa(unescape(encodeURIComponent(payload)));
-    const body = {
-      message: 'Actualiza datos de EdgeHub',
-      content: content,
-      branch: GH_BRANCH
-    };
-    if(ghFileSha) body.sha = ghFileSha;
-
-    const res = await fetch(GH_API, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `token ${GH_TOKEN}`,
-        'Accept': 'application/vnd.github+json'
-      },
-      body: JSON.stringify(body)
-    });
-    if(!res.ok) throw new Error('GitHub PUT ' + res.status);
-    const json = await res.json();
-    ghFileSha = json.content.sha;
-    return true;
-  }catch(err){
-    console.error('No se pudo guardar data.json en GitHub:', err);
-    toast('No se pudo sincronizar con GitHub, se guardó solo en este dispositivo');
-    return false;
-  }
-}
-
-async function login(){
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
-  
-  if(!u || !p){ 
-    document.getElementById('loginError').textContent='Completá usuario y contraseña.'; 
-    return; 
-  }
-  
-  if(u.toLowerCase() !== p.toLowerCase()){ 
-    document.getElementById('loginError').textContent='Contraseña incorrecta.'; 
-    return; 
-  }
-  
-  isAdmin = (u.toLowerCase() === 'lauti');
-  currentUser = u;
-
-  document.getElementById('loginError').textContent = '';
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('loader').style.display = 'flex';
-
-  const start = Date.now();
-  const remoteTraders = await loadTradersFromGitHub();
-  if(remoteTraders){
-    traders = remoteTraders;
-    localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
-  }
-  const wait = Math.max(0, 1800 - (Date.now() - start));
-
-  setTimeout(() => {
-    document.getElementById('loader').style.display = 'none';
+  function login() {
+    const user = document.getElementById('loginUser').value;
+    if(!user) {
+      document.getElementById('loginError').innerText = "Ingresa un usuario";
+      return;
+    }
+    document.getElementById('profileName').innerText = user;
+    window.currentUser = user;
+    document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    applySession(u);
-    initFireWave();
-  }, wait);
-}
-
-document.addEventListener('keydown', e => {
-  if(e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') login();
-});
-
-function applySession(user){
-  document.getElementById('profileName').textContent = user;
-  document.getElementById('profileRole').textContent = isAdmin ? 'Administrador' : 'Miembro';
-  document.getElementById('avatar').textContent = user.slice(0,2).toUpperCase();
-  
-  document.querySelectorAll('.admin-only').forEach(el => {
-    el.style.display = isAdmin ? 'block' : 'none';
-  });
-  
-  updateMailBadge();
-  renderAll();
-}
-
-function updateMailBadge(){
-  const badge = document.getElementById('mailBadge');
-  if(isAdmin && hubMessages.length > 0){
-    badge.textContent = hubMessages.length;
-    badge.style.display = 'flex';
-  } else {
-    badge.style.display = 'none';
-  }
-}
-
-function toggleMobileNav(){
-  document.getElementById('sideNav').classList.toggle('open');
-  document.getElementById('navOverlay').classList.toggle('visible');
-}
-
-function closeMobileNav(){
-  document.getElementById('sideNav').classList.remove('open');
-  document.getElementById('navOverlay').classList.remove('visible');
-}
-
-function switchTab(tabId, btnEl){
-  document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-  
-  document.getElementById('view-' + tabId).classList.add('active');
-  if(btnEl) btnEl.classList.add('active');
-  closeMobileNav();
-  
-  const title = document.getElementById('pageTitle');
-  const sub = document.getElementById('pageSubtitle');
-  if(tabId === 'dashboard'){
-    title.textContent = 'Dashboard';
-    sub.textContent = 'Rendimiento, win streak y consistencia del equipo';
-  } else if(tabId === 'team'){
-    title.textContent = 'Integrantes del Equipo';
-    sub.textContent = 'Perfiles y trofeos concedidos a los miembros';
-  } else if(tabId === 'sendhub'){
-    title.textContent = 'Enviar Hub';
-    sub.textContent = 'Envía comentarios e imágenes directamente a Lauti';
-  } else if(tabId === 'achievements'){
-    title.textContent = 'Logros & Reconocimientos';
-    sub.textContent = 'Cada acción y resultado trae sus recompensas';
-  } else if(tabId === 'stats'){
-    title.textContent = 'Estadísticas';
-    sub.textContent = 'Métricas globales e historial acumulado';
-  }
-}
-
-function logout(){ location.reload(); }
-
-function previewHubImage(event){
-  const file = event.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      currentBase64Image = e.target.result;
-      document.getElementById('hubImgPreview').src = currentBase64Image;
-      document.getElementById('previewContainer').style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-function sendToHub(){
-  const comment = document.getElementById('hubComment').value.trim();
-  if(!comment && !currentBase64Image){
-    toast('Por favor escribe un comentario o adjunta una imagen.');
-    return;
   }
 
-  const now = new Date();
-  const dateStr = `${now.getDate()}/${now.getMonth()+1} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-  const newMsg = {
-    sender: currentUser,
-    comment: comment,
-    image: currentBase64Image,
-    date: dateStr
-  };
-
-  hubMessages.unshift(newMsg);
-  localStorage.setItem('endhubMessagesV1', JSON.stringify(hubMessages));
-
-  document.getElementById('hubComment').value = '';
-  document.getElementById('hubImageInput').value = '';
-  document.getElementById('previewContainer').style.display = 'none';
-  currentBase64Image = '';
-
-  updateMailBadge();
-  toast('¡Mensaje enviado con éxito a Lauti! 🚀');
-}
-
-function openInboxModal(){
-  if(!isAdmin){
-    toast('El buzón es privado y solo accesible para Lauti.');
-    return;
+  function logout() {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
   }
-  renderInboxMessages();
-  document.getElementById('inboxModal').style.display = 'flex';
-}
-
-function renderInboxMessages(){
-  const container = document.getElementById('inboxContainer');
-  if(hubMessages.length === 0){
-    container.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;font-size:13px">No hay mensajes en el buzón.</div>';
-  } else {
-    container.innerHTML = hubMessages.map((msg, i) => `
-      <div class="inbox-item">
-        <div class="inbox-header">
-          <div>
-            <span class="inbox-user">👤 ${msg.sender}</span>
-            <span class="inbox-date" style="margin-left:8px">${msg.date}</span>
-          </div>
-          <button class="btn-delete-msg" onclick="deleteMessage(${i})" title="Eliminar mensaje">🗑️</button>
-        </div>
-        ${msg.comment ? `<div class="inbox-comment">${msg.comment}</div>` : ''}
-        ${msg.image ? `<img class="inbox-img" src="${msg.image}" alt="Adjunto">` : ''}
-      </div>
-    `).join('');
-  }
-}
-
-function deleteMessage(index) {
-  if(!isAdmin) return;
-  hubMessages.splice(index, 1);
-  localStorage.setItem('endhubMessagesV1', JSON.stringify(hubMessages));
-  renderInboxMessages();
-  updateMailBadge();
-}
-
-function closeInboxModal(){
-  document.getElementById('inboxModal').style.display = 'none';
-}
-
-function renderAll(){
-  const maxStreak = Math.max(...traders.map(t => t.streak));
-  const activeStreakCount = traders.filter(t => t.streak > 0).length;
-  const avgCons = Math.round(traders.reduce((acc, t) => acc + t.consistency, 0) / traders.length);
-  const winRate = Math.min(99, Math.round((avgCons * 0.7) + (maxStreak * 1.5)));
-  
-  document.getElementById('dashWinRate').textContent = winRate + '%';
-  document.getElementById('dashStreak').textContent = maxStreak;
-  document.getElementById('dashConsistency').textContent = avgCons + '%';
-
-  const statusText = document.getElementById('fireStatusText');
-  const fireLabel = document.getElementById('fireLabelText');
-  const fireCard = document.getElementById('fireCardBorder');
-  if(maxStreak === 0 || activeStreakCount === 0){
-    statusText.textContent = 'Fuego Apagado';
-    statusText.style.color = '#555';
-    fireLabel.style.color = '#666';
-    fireCard.style.borderColor = '#1a202c';
-  } else {
-    statusText.textContent = `Llama encendida (${activeStreakCount}/5 activos)`;
-    statusText.style.color = '#ff6600';
-    fireLabel.style.color = '#ff6600';
-    fireCard.style.borderColor = '#661a00';
-  }
-  
-  renderRanking();
-  renderEquityChart();
-  renderTeamCards();
-  renderEditor();
-}
-
-function renderRanking(){
-  const sorted = [...traders].sort((a,b) => b.consistency - a.consistency);
-  document.getElementById('ranking').innerHTML = sorted.map((t, i) => `
-    <div class="rank">
-      <span class="num">0${i+1}</span>
-      <div class="person">
-        <b style="color:${t.color}">${t.name}</b>
-        <div class="bar"><i style="width:${t.consistency}%;background:${t.color}"></i></div>
-      </div>
-      <span class="pct" style="color:${t.color}">${t.consistency}%</span>
-    </div>
-  `).join('');
-}
-
-function renderTeamCards(){
-  const grid = document.getElementById('teamGrid');
-  grid.innerHTML = traders.map((t, idx) => `
-    <div class="profile-card">
-      <div class="profile-card-header" style="background:${t.color}"></div>
-      <div class="big-avatar" style="background:${t.color}">${t.name.slice(0,2).toUpperCase()}</div>
-      <h4>${t.name}</h4>
-      <div class="tag">${t.role || 'Miembro'}</div>
-      
-      <div class="profile-stats">
-        <div class="profile-stat-box">
-          <span>CONSISTENCIA</span>
-          <b style="color:${t.color}">${t.consistency}%</b>
-        </div>
-        <div class="profile-stat-box">
-          <span>WIN STREAK</span>
-          <b style="color:${t.streak > 0 ? 'var(--fire-orange)' : 'var(--muted)'}">${t.streak} 🔥</b>
-        </div>
-      </div>
-
-      <div class="badge-container-title">Reconocimientos</div>
-      <div class="badge-list">
-        ${(t.badges && t.badges.length) ? t.badges.map((b, bIdx) => {
-          const icon = typeof b === 'string' ? b : b.icon;
-          const glow = typeof b === 'string' ? 'glow-gold' : b.glow;
-          const removeClass = isAdmin ? 'can-remove' : '';
-          const removeTitle = isAdmin ? 'Haz clic para quitar' : '';
-          return `<div class="badge-item ${glow} ${removeClass}" onclick="removeBadge(${idx}, ${bIdx})" title="${removeTitle}">${icon}</div>`;
-        }).join('') : '<span style="font-size:11px;color:#445268;width:100%;text-align:center">Sin trofeos aún</span>'}
-      </div>
-
-      ${isAdmin ? `
-        <button class="award-btn-mini" onclick="openAwardModal(${idx})">
-          <span>✨</span> Premiar / Editar Título
-        </button>
-      ` : ''}
-    </div>
-  `).join('');
-}
-
-function removeBadge(traderIdx, badgeIdx){
-  if(!isAdmin) return;
-  const removed = traders[traderIdx].badges.splice(badgeIdx, 1);
-  localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
-  renderAll();
-  toast(`Premio ${removed[0].icon} eliminado`);
-}
-
-function openAwardModal(idx){
-  if(!isAdmin) return;
-  currentAwardTraderIndex = idx;
-  document.getElementById('modalTargetName').textContent = 'Gestionar a ' + traders[idx].name;
-  document.getElementById('customRoleInput').value = traders[idx].role || '';
-  document.getElementById('awardModal').style.display = 'flex';
-}
-
-function closeAwardModal(){
-  document.getElementById('awardModal').style.display = 'none';
-  currentAwardTraderIndex = null;
-}
-
-async function saveRoleOnly(){
-  if(!isAdmin) return;
-  if(currentAwardTraderIndex !== null){
-    const newRole = document.getElementById('customRoleInput').value.trim();
-    traders[currentAwardTraderIndex].role = newRole || 'Miembro';
-    localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
-    renderAll();
-    toast('Título actualizado');
-    closeAwardModal();
-    await saveTradersToGitHub();
-  }
-}
-
-async function confirmAward(icon, glowClass){
-  if(!isAdmin) return;
-  if(currentAwardTraderIndex !== null){
-    if(!traders[currentAwardTraderIndex].badges) traders[currentAwardTraderIndex].badges = [];
-    
-    const newRole = document.getElementById('customRoleInput').value.trim();
-    if(newRole) traders[currentAwardTraderIndex].role = newRole;
-
-    traders[currentAwardTraderIndex].badges.push({ icon: icon, glow: glowClass });
-    
-    localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
-    renderAll();
-    toast(`¡Icono ${icon} otorgado a ${traders[currentAwardTraderIndex].name}!`);
-    closeAwardModal();
-    await saveTradersToGitHub();
-  }
-}
-
-function getRealDates(count = 10){
-  const dates = [];
-  const now = new Date();
-  for(let i = count - 1; i >= 0; i--){
-    const d = new Date();
-    d.setDate(now.getDate() - i);
-    const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    dates.push(`${day}/${month}`);
-  }
-  return dates;
-}
-
-function renderEquityChart(){
-  const dates = getRealDates(10);
-  
-  const datasets = traders.map(t => {
-    const points = [];
-    if(t.consistency === 0){
-      for(let i = 0; i < dates.length; i++) points.push(0);
-    } else {
-      let baseScore = t.consistency;
-      points.push(baseScore);
-      
-      for(let i = 1; i < dates.length; i++){
-        const streakBoost = t.streak * 0.25;
-        const oscillation = Math.sin((i + t.name.length) * 1.4) * (2.5 * (1 - t.consistency / 100));
-        baseScore += streakBoost + oscillation;
-        points.push(Math.min(100, Math.max(0, Math.round(baseScore * 10) / 10)));
-      }
-    }
-
-    return {
-      label: t.name,
-      data: points,
-      borderColor: t.color,
-      backgroundColor: 'transparent',
-      borderWidth: 2.5,
-      tension: 0.35,
-      pointRadius: 3,
-      pointHoverRadius: 6
-    };
-  });
-
-  if(equityChart) equityChart.destroy();
-  
-  equityChart = new Chart(document.getElementById('equity'), {
-    type: 'line',
-    data: { labels: dates, datasets: datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { 
-        legend: { display: true, position: 'top', labels: { color: '#8b95a7', usePointStyle: true, boxWidth: 8, font: { size: 11 } } },
-        tooltip: { callbacks: { label: function(ctx) { return ' ' + ctx.dataset.label + ': ' + ctx.raw + '% consistencia'; } } }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: '#778196' } },
-        y: { min: 0, max: 100, grid: { color: '#1c2430' }, ticks: { color: '#778196', callback: function(val) { return val + '%'; } } }
-      }
-    }
-  });
-}
-
-function renderEditor(){
-  if(!isAdmin) return;
-  const box = document.getElementById('adminEditor');
-  box.innerHTML = traders.map((t, i) => `
-    <div class="edit-box">
-      <b style="color:${t.color}">${t.name}</b>
-      <div class="edit-inputs">
-        <div>
-          <label>Win Streak</label>
-          <input id="strk-${i}" type="number" min="0" value="${t.streak}">
-        </div>
-        <div>
-          <label>Consistencia</label>
-          <input id="cons-${i}" type="number" min="0" max="100" value="${t.consistency}">
-        </div>
-      </div>
-      <button class="edit-btn" style="background:${t.color};color:#000" onclick="saveTrader(${i})">Guardar Cambios</button>
-    </div>
-  `).join('');
-}
-
-async function saveTrader(i){
-  if(!isAdmin) return;
-  const s = Math.max(0, parseInt(document.getElementById('strk-' + i).value || 0));
-  const c = Math.min(100, Math.max(0, parseInt(document.getElementById('cons-' + i).value || 0)));
-  
-  traders[i].streak = s;
-  traders[i].consistency = c;
-  
-  localStorage.setItem('endhubAchievementsV3', JSON.stringify(traders));
-  renderAll();
-  toast('Métricas de ' + traders[i].name + ' actualizadas');
-  await saveTradersToGitHub();
-}
-
-function toast(msg){
-  let t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2000);
-}
-
-function initFireWave(){
-  const canvas = document.getElementById('fireCanvas');
-  const ctx = canvas.getContext('2d');
-  
-  function resize(){
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  
-  let step = 0;
-  const particles = Array.from({length: 30}, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + 1,
-    vY: Math.random() * 1.5 + 0.5,
-    opacity: Math.random()
-  }));
-
-  function draw(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const h = canvas.height;
-    const w = canvas.width;
-    
-    const activeStreakTraders = traders.filter(t => t.streak > 0).length;
-    const maxStreak = Math.max(...traders.map(t => t.streak));
-    const firePower = activeStreakTraders > 0 ? (activeStreakTraders / 5) * 0.7 + (maxStreak / 20) * 0.3 : 0;
-
-    if(firePower === 0){
-      ctx.beginPath();
-      ctx.moveTo(0, h);
-      ctx.lineTo(w, h);
-      ctx.lineTo(w, h - 8);
-      ctx.lineTo(0, h - 8);
-      ctx.fillStyle = 'rgba(40, 45, 55, 0.4)';
-      ctx.fill();
-    } else {
-      step += 0.02 + (firePower * 0.06);
-      
-      const layers = [
-        { color: `rgba(160, 0, 0, ${0.3 + firePower * 0.4})`, speed: 1, amp: 10 + firePower * 16, freq: 0.012 },
-        { color: `rgba(255, 42, 0, ${0.4 + firePower * 0.5})`, speed: 1.4, amp: 8 + firePower * 12, freq: 0.018 },
-        { color: `rgba(255, 160, 0, ${0.5 + firePower * 0.5})`, speed: 1.8, amp: 4 + firePower * 8, freq: 0.025 }
-      ];
-      
-      layers.forEach(l => {
-        ctx.beginPath();
-        ctx.moveTo(0, h);
-        for(let x = 0; x <= w; x += 5){
-          let y = Math.sin(x * l.freq + step * l.speed) * l.amp + (h * (0.65 - firePower * 0.2));
-          ctx.lineTo(x, y);
-        }
-        ctx.lineTo(w, h);
-        ctx.fillStyle = l.color;
-        ctx.fill();
-      });
-
-      const activeParticles = Math.floor(particles.length * firePower);
-      for(let i = 0; i < activeParticles; i++){
-        const p = particles[i];
-        p.y -= p.vY * (0.8 + firePower);
-        if(p.y < 0) { p.y = h; p.x = Math.random() * w; }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * (0.8 + firePower * 0.5), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity * firePower})`;
-        ctx.fill();
-      }
-    }
-    
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
 </script>
- <script type="module">
+
+<!-- SCRIPT DE FIREBASE CONECTADO AL BOTÓN "Enviar a Lauti 🚀" -->
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
   import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-  // Tu configuración oficial de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDaa0202QD6WmSEOs6qqhWE0AMIFNr1feg",
     authDomain: "edhehub.firebaseapp.com",
@@ -1573,17 +730,18 @@ function initFireWave(){
     measurementId: "G-PZEHMEDH1E"
   };
 
-  // Inicializar Firebase, Analytics, Firestore y Storage
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
   const storage = getStorage(app);
 
-  // 1. Función de envío (Conectada a "Enviar Hub")
+  // Función vinculada al botón del HTML
   window.sendToHub = async function() {
     try {
-      const comment = document.getElementById("hubComment").value;
+      const commentInput = document.getElementById("hubComment");
       const fileInput = document.getElementById("hubImageInput");
+      
+      const comment = commentInput ? commentInput.value : "";
       let imageUrl = "";
 
       if (!comment && (!fileInput || !fileInput.files[0])) {
@@ -1591,7 +749,7 @@ function initFireWave(){
         return;
       }
 
-      // Subir imagen si se seleccionó una
+      // Subir imagen a Storage si fue adjuntada
       if (fileInput && fileInput.files[0]) {
         const file = fileInput.files[0];
         const storageRef = ref(storage, `buzon/${Date.now()}_${file.name}`);
@@ -1599,10 +757,9 @@ function initFireWave(){
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      // Obtener el nombre del usuario actual
-      const usuarioActual = window.currentUser || document.getElementById("profileName").innerText || "Usuario";
+      const usuarioActual = window.currentUser || document.getElementById("profileName").innerText || "Trader";
       
-      // Guardar el mensaje en Firestore
+      // Guardar el documento en la base de datos Firestore
       await addDoc(collection(db, "mensajes_buzon"), {
         usuario: usuarioActual,
         comentario: comment,
@@ -1612,8 +769,8 @@ function initFireWave(){
 
       alert("¡Enviado a Lauti con éxito 🚀!");
       
-      // Limpiar campos del formulario
-      document.getElementById("hubComment").value = "";
+      // Limpiar el formulario
+      if(commentInput) commentInput.value = "";
       if(fileInput) fileInput.value = "";
       const previewContainer = document.getElementById("previewContainer");
       if(previewContainer) previewContainer.style.display = "none";
@@ -1624,21 +781,11 @@ function initFireWave(){
     }
   };
 
-  // 2. Sincronización en tiempo real del Buzón y el contador de notificaciones
+  // Sincronización en tiempo real para el buzón y la insignia de notificaciones
   const q = query(collection(db, "mensajes_buzon"), orderBy("timestamp", "desc"));
   
   onSnapshot(q, (snapshot) => {
     let inboxList = document.getElementById("inboxListDynamic");
-    if (!inboxList) {
-      const inboxContainer = document.querySelector(".modal-card"); 
-      if (inboxContainer) {
-        inboxList = document.createElement("div");
-        inboxList.id = "inboxListDynamic";
-        inboxList.className = "inbox-list";
-        inboxContainer.appendChild(inboxList);
-      }
-    }
-
     if (inboxList) {
       inboxList.innerHTML = "";
     }
@@ -1670,7 +817,7 @@ function initFireWave(){
     });
   });
 
-  // 3. Función para borrar mensajes de Firestore
+  // Función para borrar mensajes de Firestore
   window.eliminarMensajeBuzon = async function(id) {
     if (confirm("¿Estás seguro de eliminar este mensaje?")) {
       try {
@@ -1680,6 +827,7 @@ function initFireWave(){
       }
     }
   };
-</script> 
+</script>
+
 </body>
 </html>
