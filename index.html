@@ -1,317 +1,156 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EdgeHub — Trading Hub</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-:root{
-  --bg:#000000;--panel:#0d1118;--panel2:#111722;--line:#202735;
-  --text:#ffffff;--muted:#8b95a7;--green:#43e69b;--red:#ff4d5f;
-  --fire:#ff2a00;--fire-orange:#ff6600;--blue:#65a9ff;--white:#ffffff;--purple:#a855f7;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  overflow-x:hidden;position:relative;
-}
-
-.global-bg-glow {
-  position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(circle at 50% 35%, rgba(101, 169, 255, 0.2) 0%, rgba(39, 115, 255, 0.08) 40%, rgba(0, 0, 0, 0) 70%);
-}
-
-#loginScreen{
-  position:fixed;inset:0;z-index:9999;background:#000;
-  display:flex;align-items:center;justify-content:center;padding:24px;
-}
-.login-card{background:#fff;border-radius:18px;padding:18px;max-width:360px;margin:0 auto;color:#111;text-align:center;}
-.login-card input{width:100%;padding:10px 12px;margin:5px 0;border:1px solid #ddd;border-radius:10px;outline:none}
-.login-card button{width:100%;margin-top:10px;padding:10px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:800;cursor:pointer}
-.login-error{color:#d32637;font-size:12px;margin-top:8px;min-height:18px}
-
-.app{display:none;min-height:100vh}
-.side{width:245px;background:#090c11;border-right:1px solid var(--line);padding:24px 16px;position:fixed;inset:0 auto 0 0;z-index:10;}
-.brand{font-weight:900;font-size:26px;letter-spacing:1.8px;margin:4px 10px 32px;color:#fff}.brand span{color:var(--green)}
-.nav button{width:100%;border:0;background:transparent;color:var(--muted);padding:13px 12px;text-align:left;border-radius:10px;margin:3px 0;font-size:14px;cursor:pointer}
-.nav button.active,.nav button:hover{background:#151b25;color:#fff}
-.nav small{display:block;color:#5f6979;margin:25px 10px 8px;text-transform:uppercase;font-size:10px;letter-spacing:1.5px}
-
-.main{margin-left:245px;width:calc(100% - 245px);padding:28px 32px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
-.profile{display:flex;align-items:center;gap:15px}
-.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#65a9ff,#2773ff);display:grid;place-items:center;font-weight:800;color:#fff}
-
-.mailbox-btn{
-  position:relative;width:42px;height:42px;border-radius:12px;background:#101724;border:1px solid #202b3d;
-  display:grid;place-items:center;font-size:18px;cursor:pointer;color:#fff;
-}
-.mailbox-badge{
-  position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;
-  font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;
-  display:none;align-items:center;justify-content:center;border:2px solid #000;
-}
-
-.send-hub-card{max-width:650px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:10px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600}
-.form-group textarea{width:100%;height:110px;background:#06080d;border:1px solid #1c2536;border-radius:10px;padding:12px;color:#fff;font-family:inherit;font-size:13px;resize:none;outline:none}
-.file-dropzone{
-  border:2px dashed #1e293b;border-radius:12px;padding:24px;text-align:center;background:#06080d;
-  cursor:pointer;position:relative;
-}
-.file-dropzone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.img-preview-box{margin-top:12px;display:none}
-.img-preview-box img{max-width:200px;max-height:140px;border-radius:10px;border:1px solid var(--blue);display:block}
-.btn-send-hub{
-  background:linear-gradient(135deg,#65a9ff,#2773ff);color:#fff;border:0;border-radius:10px;
-  padding:12px 24px;font-weight:800;font-size:13px;cursor:pointer;
-}
-
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20000;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-card{background:var(--panel);border:1px solid #253144;border-radius:16px;width:min(480px, 95%);padding:22px}
-.inbox-list{display:flex;flex-direction:column;gap:14px;max-height:420px;overflow-y:auto;padding-right:6px}
-.inbox-item{background:#06080d;border:1px solid #182232;border-radius:12px;padding:14px}
-.inbox-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.inbox-user{font-weight:800;color:var(--blue);font-size:13px}
-.inbox-date{font-size:10px;color:var(--muted)}
-.inbox-comment{font-size:13px;color:#d1d5db;margin-bottom:10px;white-space:pre-wrap}
-.inbox-img{max-width:100%;max-height:220px;border-radius:8px;display:block}
-.btn-delete-msg{background:transparent;border:0;color:var(--red);cursor:pointer;font-size:14px}
-.view-section{display:none}
-.view-section.active{display:block}
-</style>
-</head>
-<body>
-
-<div class="global-bg-glow"></div>
-
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-card">
-    <h1>EdgeHub</h1>
-    <input id="loginUser" type="text" placeholder="Usuario (ej: Tony, Lauti)" autocomplete="username">
-    <button onclick="login()">Ingresar</button>
-    <div class="login-error" id="loginError"></div>
-  </div>
-</div>
-
-<!-- APP PRINCIPAL -->
-<div class="app" id="app">
-<aside class="side">
-  <div class="brand">EDGE<span>HUB</span></div>
-  <div class="nav">
-    <button class="nav-btn active" onclick="switchTab('sendhub', this)">✉ &nbsp; Enviar Hub</button>
-  </div>
-</aside>
-
-<main class="main">
-<header class="top">
-  <div>
-    <h1>Enviar Hub</h1>
-    <p>Tus mensajes e imágenes irán directo al buzón de Lauti</p>
-  </div>
-  <div class="profile">
-    <div class="mailbox-btn" onclick="openInboxModal()" title="Buzón de Lauti">
-      ✉
-      <div class="mailbox-badge" id="mailBadge">0</div>
-    </div>
-    <div>
-      <b id="profileName">Usuario</b>
-      <div style="font-size:11px;color:var(--muted);cursor:pointer" onclick="logout()">Cerrar sesión</div>
-    </div>
-    <div class="avatar" id="avatar">EH</div>
-  </div>
-</header>
-
-<!-- VISTA ENVIAR HUB -->
-<div id="view-sendhub" class="view-section active">
-  <div class="send-hub-card">
-    <h3 style="margin:0 0 6px;font-size:18px">Enviar Mensaje / Captura a Lauti</h3>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:20px">Cualquier usuario que envíe contenido lo compartirá automáticamente con Lauti.</p>
-    
-    <div class="form-group">
-      <label>Tu Comentario / Análisis</label>
-      <textarea id="hubComment" placeholder="Escribe aquí tu comentario..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Adjuntar Imagen (Opcional)</label>
-      <div class="file-dropzone">
-        <input type="file" id="hubImageInput" accept="image/*" onchange="previewHubImage(event)">
-        <span style="font-size:24px;display:block;margin-bottom:6px">📷</span>
-        <span style="font-size:13px;color:var(--muted)">Haz clic o arrastra una imagen aquí</span>
-      </div>
-      <div class="img-preview-box" id="previewContainer">
-        <img id="hubImgPreview" src="" alt="Vista previa">
-      </div>
-    </div>
-
-    <button class="btn-send-hub" onclick="sendToHub()">Enviar a Lauti 🚀</button>
-  </div>
-</div>
-
-</main>
-</div>
-
-<!-- MODAL DEL BUZON -->
-<div class="modal-overlay" id="inboxModal" onclick="if(event.target === this) closeInboxModal()">
-  <div class="modal-card">
-    <h3>Buzón de Mensajes (Destino: Lauti)</h3>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:12px">Aquí llegan todos los reportes enviados por el equipo.</p>
-    <div id="inboxListDynamic" class="inbox-list"></div>
-    <div style="margin-top:15px;text-align:right;">
-      <button onclick="closeInboxModal()" style="background:#18202c;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer">Cerrar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  function switchTab(tabId, btn) {
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById('view-' + tabId).classList.add('active');
-  }
-
-  function openInboxModal() { document.getElementById('inboxModal').style.display = 'flex'; }
-  function closeInboxModal() { document.getElementById('inboxModal').style.display = 'none'; }
-
-  let base64ImageString = "";
-
-  function previewHubImage(event) {
-    const file = event.target.files[0];
-    const previewContainer = document.getElementById('previewContainer');
-    const previewImg = document.getElementById('hubImgPreview');
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        base64ImageString = e.target.result; // Guarda la imagen convertida en texto plano
-        previewImg.src = base64ImageString;
-        previewContainer.style.display = 'block';
-      }
-      reader.readAsDataURL(file);
-    } else {
-      base64ImageString = "";
-      previewContainer.style.display = 'none';
-    }
-  }
-
-  function login() {
-    const user = document.getElementById('loginUser').value.trim();
-    if(!user) {
-      document.getElementById('loginError').innerText = "Ingresa un usuario";
-      return;
-    }
-    document.getElementById('profileName').innerText = user;
-    document.getElementById('avatar').innerText = user.substring(0,2).toUpperCase();
-    window.currentUser = user;
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  }
-
-  function logout() {
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('loginScreen').style.display = 'flex';
-  }
-</script>
-
-<!-- FIREBASE FIRESTORE (SIN STORAGE) -->
+<!-- SCRIPT DE FIREBASE ADAPTADO EXCLUSIVAMENTE PARA LAUTI -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
   import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDaa0202QD6WmSEOs6qqhWE0AMIFNr1feg",
     authDomain: "edhehub.firebaseapp.com",
     projectId: "edhehub",
+    storageBucket: "edhehub.firebasestorage.app",
     messagingSenderId: "587481714783",
-    appId: "1:587481714783:web:69153817ec93e198b58bea"
+    appId: "1:587481714783:web:69153817ec93e198b58bea",
+    measurementId: "G-PZEHMEDH1E"
   };
 
   const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
-  // Enviar directo a Firestore guardando imagen como texto (Base64)
-  window.sendToHub = async function() {
-    try {
-      const commentInput = document.getElementById("hubComment");
-      const comment = commentInput ? commentInput.value.trim() : "";
+  // 1. CUBRIR EL LOGIN: Controlar visibilidad del buzón según el usuario
+  const originalLogin = window.login;
+  window.login = function() {
+    // Ejecuta la función de login que ya tenías
+    if (typeof originalLogin === 'function') originalLogin();
+    
+    const user = (window.currentUser || "").trim().toLowerCase();
+    const mailboxBtn = document.querySelector('.mailbox-btn');
 
-      if (!comment && !window.base64ImageString) {
-        alert("Escribe un comentario o adjunta una imagen antes de enviar.");
-        return;
-      }
-
-      const usuarioActual = window.currentUser || document.getElementById("profileName").innerText || "Trader";
-      
-      // Guarda todo dentro de Firestore sin pasar por Storage ni dar errores de CORS
-      await addDoc(collection(db, "mensajes_buzon"), {
-        usuario: usuarioActual,
-        destino: "Lauti",
-        comentario: comment,
-        imagenBase64: window.base64ImageString || "",
-        timestamp: Date.now()
-      });
-
-      alert("¡Enviado al buzón de Lauti con éxito 🚀!");
-      
-      // Limpiar formulario
-      if(commentInput) commentInput.value = "";
-      window.base64ImageString = "";
-      document.getElementById("hubImageInput").value = "";
-      document.getElementById("previewContainer").style.display = "none";
-      
-    } catch (error) {
-      console.error("Error al enviar:", error);
-      alert("Hubo un error al enviar el mensaje. Revisa la consola.");
+    // Si el usuario NO es lauti, ocultamos el acceso al buzón privado
+    if (user === "lauti") {
+      if (mailboxBtn) mailboxBtn.style.display = "grid";
+      escucharBuzonLauti(); // Activamos la recepción en tiempo real
+    } else {
+      if (mailboxBtn) mailboxBtn.style.display = "none";
     }
   };
 
-  // Sincronización en tiempo real del buzón
-  const q = query(collection(db, "mensajes_buzon"), orderBy("timestamp", "desc"));
-  
-  onSnapshot(q, (snapshot) => {
-    let inboxList = document.getElementById("inboxListDynamic");
-    if (inboxList) inboxList.innerHTML = "";
+  // 2. ENVIAR AL HUB (Cualquier usuario envía a Lauti)
+  window.sendToHub = async function() {
+    const commentInput = document.getElementById("hubComment");
+    const fileInput = document.getElementById("hubImageInput");
+    const btn = document.querySelector(".btn-send-hub");
 
-    const badge = document.getElementById("mailBadge");
-    if (badge) {
-      badge.innerText = snapshot.size;
-      badge.style.display = snapshot.size > 0 ? "flex" : "none";
+    const comment = commentInput.value.trim();
+    const file = fileInput.files[0];
+
+    if (!comment && !file) {
+      alert("Por favor, escribe un comentario o adjunta una imagen.");
+      return;
     }
 
-    snapshot.forEach((docSnap) => {
-      const data = docSnap.data();
-      const fecha = new Date(data.timestamp).toLocaleString();
+    btn.disabled = true;
+    btn.innerText = "Enviando a Lauti... ⏳";
 
-      if (inboxList) {
-        const item = document.createElement("div");
-        item.className = "inbox-item";
-        item.innerHTML = `
-          <div class="inbox-header">
-            <span class="inbox-user">${data.usuario || "Trader"} ➔ ${data.destino || "Lauti"}</span>
-            <span class="inbox-date">${fecha}</span>
+    try {
+      let imageUrl = "";
+
+      // Si subieron imagen, la guardamos en la carpeta hub_images
+      if (file) {
+        const storageRef = ref(storage, 'hub_images/' + Date.now() + '_' + file.name);
+        await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
+      // Guardamos el mensaje dirigido al buzón de Lauti
+      await addDoc(collection(db, "buzon_lauti"), {
+        sender: window.currentUser || "Usuario Anónimo",
+        comment: comment,
+        imageUrl: imageUrl,
+        timestamp: new Date()
+      });
+
+      // Limpiar formulario
+      commentInput.value = "";
+      fileInput.value = "";
+      const previewContainer = document.getElementById('previewContainer');
+      if (previewContainer) previewContainer.style.display = 'none';
+
+      alert("¡Imagen/Mensaje enviado con éxito al buzón de Lauti! 🚀");
+
+    } catch (error) {
+      console.error("Error al enviar: ", error);
+      alert("Ocurrió un error al enviar. Revisa la consola.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Enviar a Lauti 🚀";
+    }
+  };
+
+  // 3. RECIBIR EN TIEMPO REAL (Exclusivo para Lauti)
+  let unsubscribeBuzon = null;
+
+  function escucharBuzonLauti() {
+    // Evitamos duplicar escuchadores
+    if (unsubscribeBuzon) return;
+
+    const buzonRef = collection(db, "buzon_lauti");
+    const q = query(buzonRef, orderBy("timestamp", "desc"));
+
+    unsubscribeBuzon = onSnapshot(q, (snapshot) => {
+      const inboxList = document.getElementById("inboxListDynamic");
+      const badge = document.getElementById("mailBadge");
+      
+      if (!inboxList) return;
+      inboxList.innerHTML = "";
+      let count = 0;
+
+      snapshot.forEach((docSnapshot) => {
+        const data = docSnapshot.data();
+        const docId = docSnapshot.id;
+        count++;
+
+        const dateStr = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Recién";
+        const imgHtml = data.imageUrl ? `<img src="${data.imageUrl}" class="inbox-img" alt="Captura de trade" style="margin-top:10px; border-radius:8px; max-width:100%;">` : "";
+
+        inboxList.innerHTML += `
+          <div class="inbox-item" style="background:#06080d; border:1px solid #182232; border-radius:12px; padding:14px; margin-bottom:12px;">
+            <div class="inbox-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div class="inbox-user" style="font-weight:800; color:var(--blue); font-size:13px;">De: ${data.sender}</div>
+              <div style="display:flex; align-items:center; gap: 8px;">
+                <span class="inbox-date" style="font-size:10px; color:var(--muted);">${dateStr}</span>
+                <button onclick="deleteMessage('${docId}')" style="background:transparent; border:0; cursor:pointer;" title="Borrar">🗑️</button>
+              </div>
+            </div>
+            <div class="inbox-comment" style="font-size:13px; color:#d1d5db;">${data.comment || ""}</div>
+            ${imgHtml}
           </div>
-          ${data.comentario ? `<div class="inbox-comment">${data.comentario}</div>` : ""}
-          ${data.imagenBase64 ? `<img src="${data.imagenBase64}" class="inbox-img" alt="Captura enviada">` : ""}
-          <button class="btn-delete-msg" onclick="eliminarMensajeBuzon('${docSnap.id}')" style="margin-top:8px;">🗑️ Eliminar</button>
         `;
-        inboxList.appendChild(item);
+      });
+
+      // Actualizamos el contador solo en la pantalla de Lauti
+      if (badge) {
+        if (count > 0) {
+          badge.style.display = "flex";
+          badge.innerText = count;
+        } else {
+          badge.style.display = "none";
+        }
       }
     });
-  });
+  }
 
-  window.eliminarMensajeBuzon = async function(id) {
-    if (confirm("¿Estás seguro de eliminar este mensaje del buzón?")) {
+  // 4. FUNCIÓN PARA ELIMINAR MENSAJES DEL BUZÓN
+  window.deleteMessage = async function(docId) {
+    if (confirm("¿Estás seguro de eliminar este registro del buzón?")) {
       try {
-        await deleteDoc(doc(db, "mensajes_buzon", id));
-      } catch (e) {
-        console.error("Error al eliminar:", e);
+        await deleteDoc(doc(db, "buzon_lauti", docId));
+      } catch (error) {
+        console.error("Error al eliminar: ", error);
       }
     }
   };
 </script>
-
-</body>
-</html>
